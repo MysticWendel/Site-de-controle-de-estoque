@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-<form action="acoes.php" method="POST">
+<form action="funcoes.php" method="POST">
             <input type="hidden" name="idProduto" value="null">
 
             <label for="nome">Nome</label>
@@ -36,6 +36,9 @@
 
             <label for="distribuidora">Distribuidora</label>
             <input type="text" name="distribuidora" id="distribuidora"> <br>
+
+            <a type="button" class="btn btn-secondary" href="index.php">Voltar</a>
+            <button type="submit" name="adcionarProduto" id='adcionarProduto' class="btn btn-primary">Adcionar</button>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
