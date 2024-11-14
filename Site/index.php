@@ -40,6 +40,7 @@
     }
      
 ?>
+<script src="../JS/script.js"></script>
 <body>
     <header>
         <h1>Pitanga Seca Sistema de Estoque</h1>
