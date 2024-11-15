@@ -52,10 +52,11 @@ include_once('connection.php');
 
     if (isset($_POST['deletarProduto'])){
 
-        $idProduto = $_GET['idProduto'];
+        $idProduto = $_POST['idDeletar'];
 
         $result = "DELETE from produtos where idProdutos = $idProduto";
         mysqli_query($conn, $result);
+        
         header( "Location: index.php" );
     }
          

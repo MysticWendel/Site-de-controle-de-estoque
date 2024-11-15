@@ -21,14 +21,12 @@
     <main>
     <div class='containerTabela'>
         <div class='tabelaFerramentas'>
-            <input type="text" placeholder="Pesquisar..." name="barraPesquisa" id="barraPesquisa"> 
+            <input type="text" placeholder="Pesquisar..." onkeyup="pesquisa()" name="barraPesquisa" id="barraPesquisa"> 
             <select name="seleçãoSetor" id="seleçãoSetor">
                 <option value="0">---Todos---</option>
                 <?php 
-                    $i = 1;
                     while($rows = mysqli_fetch_array($setor)) {
-                        echo "<option value=".$i.">".$rows["Setor"]."</option>";
-                        $i++;
+                        echo "<option value=\"".$rows["Setor"]."\">".$rows["Setor"]."</option>";
                     }
                 ?>
             </select>
@@ -37,7 +35,7 @@
                 </a>
         </div>
         <div class='tabelaConteúdo'>
-        <table>
+        <table id='myTable'>
             <thead>
                 <tr>
                     <th>ID</th> 
@@ -52,30 +50,34 @@
                 </tr>
             </thead>
             <tbody>
-                
             <?php 
                 //Linhas da tabela de produto
-                while($rows = mysqli_fetch_array($produto)){
-                echo "<tr>";
-                        echo "<td>". $rows['idProdutos'] ."</td>";
-                        echo "<td>" . $rows['nome'] ."</td>";
-                        echo "<td>" . $rows['preçoCompra'] . "</td>";
-                        echo "<td>" . $rows["preçoVenda"] ."</td>";
-                        echo "<td>" . $rows["estoque"] ."</td>";
-                        echo "<td>" . $rows["distribuidora"] . "</td>";
+                while($rows = mysqli_fetch_array($produto))
+                {
+                  ?>
+                <tr class="ativo">
+                        <td><?php echo $rows['idProdutos']; ?></td>
+                        <td><?php echo $rows['nome']; ?></td>
+                        <td><?php echo $rows['preçoCompra']; ?></td>
+                        <td><?php echo $rows['preçoVenda']; ?></td>
+                        <td><?php echo $rows['estoque']; ?></td>
+                        <td><?php echo $rows['distribuidora']; ?></td>
 
+                        <?php 
                         if ($rows['estoque'] > 0){
                         echo "<td class=\"statusDisponivel\"> Disponível </td>";
                         } else {
                         echo "<td class=\"statusIndisponivel\"> Indisponível </td>";
                         }
+                        ?>
 
-                        echo "<td>" . $rows['Setor'] . "</td>";
+                        <td><?php echo $rows['Setor']; ?></td>
 
-                        echo "<td> <a type=\"button\" class=\"btn btn-primary\" href=\"editar.php?idProduto=" . $rows['idProdutos'] . "\"?>
-  Editar </a> <button type=\"button\" id=\"botãoDeletar\" class=\"btn btn-danger btn-del\" data-bs-toggle=\"modal\" data-bs-target=\"#deletarModal\">
-  Deletar </button> </td>";
-                echo "</tr>";
+                        <td> <a type="button" class="btn btn-primary" href="editar.php?idProduto=<?php echo $rows['idProdutos']?>">
+  Editar </a> <button type="button" id="botãoDeletar" class="btn btn-danger btn-del" data-bs-toggle="modal" data-bs-target="#deletarModal">
+  Deletar </button> </td>
+                </tr>
+              <?php
                     }
             ?>
             </tbody>
@@ -91,24 +93,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="funcoes.php" method="post">
-      <input type="hidden" name="idProduto" >
+      <input type="hidden" name="idDeletar" id="idDeletar">
       <div class="modal-body">
-        Realmente deseja deletar este item? (ID: )
+        <h4>Realmente deseja deleta este item?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" name="deletarProduto" class="btn btn-danger">Deletar</button>
+        <button type="submit" name="deletarProduto" class="btn btn-danger">Deletar</button>
       </div>
     </div>
   </div>
 </div>
-<script>
-   
-  $('.btn-del').on('click', function(){
-    console.log("Hello :3")
-  });
-</script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script text="text/javascript" src="../JS/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
