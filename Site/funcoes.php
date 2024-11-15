@@ -21,6 +21,8 @@ include_once('connection.php');
 
         $result = "INSERT INTO produtos VALUES ($idProduto, '$nome', $compra, $venda, $estoque, '$distribuidora', $disponibilidade, $setor)";
 
+        echo "<h1>$result</h1>";
+
         mysqli_query($conn, $result);
         header( "Location: index.php" );
 

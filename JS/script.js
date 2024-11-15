@@ -1,25 +1,11 @@
-$(document).ready(function(){
-  $('.btn-del').on('click', function(){
-
-    $tr = $(this).closest('tr');
-
-    var data = $tr.children('td').map(function() {
-      return $(this).text()
-    }).get();
-
-    $('#idDeletar').val(data[0]);
-  });
-})
 
 function pesquisa() {
-// Declare variables
 var input, filter, table, tr, td, i, txtValue;
 input = document.getElementById("barraPesquisa");
 filter = input.value.toUpperCase();
 table = document.getElementById("myTable");
 tr = table.getElementsByTagName("tr");
 
-// Loop through all table rows, and hide those who don't match the search query
 for (i = 0; i < tr.length; i++) {
   td = tr[i].getElementsByTagName("td")[1];
   if (td) {
@@ -35,7 +21,7 @@ for (i = 0; i < tr.length; i++) {
 }
 }
 
-$("#seleçãoSetor").change(function () {
+$("#pesquisaSetor").change(function () {
 var table, tr, td, i;
 table = document.getElementById("myTable");
 tr = table.getElementsByTagName("tr");
@@ -55,3 +41,31 @@ for (i = 0; i < tr.length; i++){
 }
 }
 });
+
+$(document).ready(function(){
+  $('.btn-del').on('click', function(){
+
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children('td').map(function() {
+      return $(this).text()
+    }).get();
+
+    $('#idDeletar').val(data[0]);
+  });
+  $('.btn-editar').on('click', function(){
+
+    $tr = $(this).closest('tr');
+
+    var data = $tr.children('td').map(function() {
+      return $(this).text()
+    }).get();
+
+    $('#editIdProduto').val(data[0]);
+    $('#editNome').val(data[1]);
+    $('#editPreçoCompra').val(data[2]);
+    $('#editPreçoVenda').val(data[3]);
+    $('#editEstoque').val(data[4]);
+    $('#editDistribuidora').val(data[5]);
+  });
+  });
