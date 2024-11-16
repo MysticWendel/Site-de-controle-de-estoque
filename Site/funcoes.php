@@ -12,19 +12,12 @@ include_once('connection.php');
         $distribuidora = $_POST['distribuidora'];
         $setor = $_POST['seleçãoSetor'];
 
-
-        if ($estoque > 0){
-            $disponibilidade = 1;
-        } else {
-            $disponibilidade = 0;
-        }
-
-        $result = "INSERT INTO produtos VALUES ($idProduto, '$nome', $compra, $venda, $estoque, '$distribuidora', $disponibilidade, $setor)";
+        $result = "INSERT INTO produtos VALUES ($idProduto, '$nome', $compra, $venda, $estoque, '$distribuidora', $setor)";
 
         echo "<h1>$result</h1>";
 
         mysqli_query($conn, $result);
-        header( "Location: index.php" );
+        header( "Location: listaProdutos.php" );
 
     }
 
@@ -38,17 +31,12 @@ include_once('connection.php');
         $distribuidora = $_POST['distribuidora'];
         $setor = $_POST['seleçãoSetor'];
 
+        $result = "UPDATE produtos SET nome = '$nome', preço_compra = $compra, preço_venda = $venda, estoque = $estoque, distribuidora = '$distribuidora', idSetor = $setor WHERE idProduto = $idProduto";
 
-        if ($estoque > 0){
-            $disponibilidade = 1;
-        } else {
-            $disponibilidade = 0;
-        }
-
-        $result = "UPDATE produtos SET nome = '$nome', preçoCompra = $compra, preçoVenda = $venda, estoque = $estoque, distribuidora = '$distribuidora', disponibilidade = $disponibilidade, idSetores = $setor WHERE idProdutos = $idProduto";
+        echo "<h1>$result</h1>";
 
         mysqli_query($conn, $result);
-        header( "Location: index.php" );
+        header( "Location: listaProdutos.php" );
 
     }
 
@@ -56,15 +44,52 @@ include_once('connection.php');
 
         $idProduto = $_POST['idDeletar'];
 
-        $result = "DELETE from produtos where idProdutos = $idProduto";
+        $result = "DELETE from produtos where idProduto = $idProduto";
         mysqli_query($conn, $result);
         
-        header( "Location: index.php" );
+        header( "Location: listaProdutos.php" );
     }
-         
-    header( "Location: index.php" );
 
+    if (isset($_POST['adcionarUsuario'])){
+        //Informações que serão inseridas no banco de dados.
+        $idUsuario = $_POST['idUsuario'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
+
+        $result = "INSERT INTO usuarios VALUES ($idUsuario, '$email', '$senha', '$username', 0)";
+
+
+        mysqli_query($conn, $result);
+        header( "Location: listaUsuarios.php" );
+
+    }
+
+    if (isset($_POST['editarUsuario'])){
+        //Informações que serão inseridas no banco de dados.
+        $idUsuario = $_POST['idUsuario'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
+
+        $result = "UPDATE usuarios SET email = '$email', senha = '$senha', username = '$username' WHERE idUsuario = $idUsuario";
+
+        var_dump($result);
+
+        mysqli_query($conn, $result);
+        header( "Location: listaUsuarios.php" );
+
+    }
+
+    if (isset($_POST['deletarUsuario'])){
+
+        $idUsuario = $_POST['idDeletar'];
+
+        $result = "DELETE from usuarios where idUsuario = $idUsuario";
+        mysqli_query($conn, $result);
         
+        header( "Location: listaUsuarios.php" );
+    }
 
      
 ?>
