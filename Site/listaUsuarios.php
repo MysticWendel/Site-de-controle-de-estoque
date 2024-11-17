@@ -24,7 +24,7 @@
     <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Inventário</a>
+    <a class="navbar-brand" href="#">Estoque</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -54,17 +54,17 @@
 </nav>
     </header>
     <main>
-    <div class='containerTabela'>
-        <div class='tabelaFerramentas'>
+        <div class='containerTabela mx-5 mt-2 card'>
+      <div class="mx-5">
+        <div class='ms-2 mt-2'>
             <input type="text" placeholder="Pesquisar..." onkeyup="pesquisa()" name="barraPesquisa" id="barraPesquisa"> 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adcionarModal">
-  +
+  Registrar Usuário
                   </button>
-        </div>
-
+          </div>
 <!-- Tabela de Produtos -->
-        <div class='tabelaConteúdo'>
-        <table id='myTable'>
+        <div class='tabelaConteúdo mx-auto'>
+        <table class="table" id='myTable'>
             <thead>
                 <tr>
                     <th>ID</th> 
@@ -77,22 +77,22 @@
             <tbody>
             <?php 
                 //Linhas da tabela de produto
+
                 while($rows = mysqli_fetch_array($usuario))
                 {
+                  if ($rows['tipo_usuario'] == 0){
+                    $tipo = "Funcionário"; 
+                } else if ($rows['tipo_usuario'] == 1) {
+                    $tipo = "Admin"; 
+                } else {
+                   $tipo = " "; 
+                }
                   ?>
                 <tr class="ativo">
                         <td><?php echo $rows['idUsuario']; ?></td>
                         <td><?php echo $rows['username']; ?></td>
                         <td><?php echo $rows['email']; ?></td>
-                        <?php 
-                        if ($rows['tipo_usuario'] == 0){
-                            echo "<td> Funcionário </td>";
-                        } else if ($rows['tipo_usuario'] == 1) {
-                            echo "<td> Admin </td>";
-                        } else {
-                            echo "<td> </td>";
-                        }
-                        ?>
+                        <td><?php echo $tipo?></td>
                         <td> <button type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#editarModal">
   Editar </button> <button type="button" id="botãoDeletar" class="btn btn-danger btn-del" data-bs-toggle="modal" data-bs-target="#deletarModal">
   Deletar </button> </td>
@@ -104,7 +104,7 @@
         </table>
         </div>
         </div>
-<!-- Tabela de Produtos -->
+        </div>
 
   
 <!-- Modal Adcionar -->

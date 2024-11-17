@@ -27,7 +27,7 @@
     <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Inventário</a>
+    <a class="navbar-brand" href="#">Estoque</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -58,25 +58,28 @@
     </header>
 
     <main>
-    <div class='containerTabela'>
-        <div class='tabelaFerramentas'>
+    <div class='containerTabela mx-5 mt-2 card'>
+      <div class="mx-5">
+        <div class='ms-2 mt-2'>
             <input type="text" placeholder="Pesquisar..." onkeyup="pesquisa()" name="barraPesquisa" id="barraPesquisa"> 
             <select name="pesquisaSetor" id="pesquisaSetor">
                 <option value="0">---Todos---</option>
-                <?php 
-                    while($rows = mysqli_fetch_array($setor)) {
-                        echo "<option value=\"".$rows["Setor"]."\">".$rows["Setor"]."</option>";
-                    }
-                ?>
+                <option value="Frios e Laticínios">Frios e Laticínios</option>
+                <option value="Higiene e limpeza">Higiene e limpeza</option>
+                <option value="Vegetais e frutas">Vegetais e frutas</option>
+                <option value="Açougue">Açougue</option>
+                <option value="Padaria">Padaria</option>
+                <option value="Cereais">Cereais</option>
+                <option value="Enlatados">Enlatados</option>
+                <option value="Adega e Bebidas">Adega e Bebidas</option>
             </select>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adcionarModal">
-  +
+  Adcionar Produto
                   </button>
-        </div>
-
+          </div>
 <!-- Tabela de Produtos -->
-        <div class='tabelaConteúdo'>
-        <table id='myTable'>
+        <div class='tabelaConteúdo mx-auto'>
+        <table class="table" id='myTable'>
             <thead>
                 <tr>
                     <th>ID</th> 
@@ -95,6 +98,11 @@
                 //Linhas da tabela de produto
                 while($rows = mysqli_fetch_array($produto))
                 {
+                  if ($rows['estoque'] > 0){
+                    $disponibilidade = 'Disponível';
+                    } else {
+                    $disponibilidade = 'Indisponivel';
+                    }
                   ?>
                 <tr class="ativo">
                         <td><?php echo $rows['idProduto']; ?></td>
@@ -103,15 +111,7 @@
                         <td><?php echo $rows['preço_venda']; ?></td>
                         <td><?php echo $rows['estoque']; ?></td>
                         <td><?php echo $rows['distribuidora']; ?></td>
-
-                        <?php 
-                        if ($rows['estoque'] > 0){
-                        echo "<td class=\"statusDisponivel\"> Disponível </td>";
-                        } else {
-                        echo "<td class=\"statusIndisponivel\"> Indisponível </td>";
-                        }
-                        ?>
-
+                        <td><?php echo $disponibilidade ?></td>
                         <td><?php echo $rows['Setor']; ?></td>
 
                         <td> <button type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#editarModal">
@@ -123,6 +123,7 @@
             ?>
             </tbody>
         </table>
+        </div>
         </div>
         </div>
 <!-- Tabela de Produtos -->
