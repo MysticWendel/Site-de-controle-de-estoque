@@ -141,16 +141,16 @@
             <input type="hidden" name="idProduto" value="null">
 
             <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome" placeholder="Ex: Maçã"> <br>
+            <input type="text" name="nome" id="nome" placeholder="Ex: Maçã" required> <br>
 
             <label for="precoCompra">Preço de Compra</label>
-            <input type="number" name="preçoCompra" id="preçoCompra" min="0" step="0.01" placeholder="Ex: 0,00"> <br>
+            <input type="number" name="preçoCompra" id="preçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
 
             <label for="precoVenda">Preço de Venda</label>
-            <input type="number" name="preçoVenda" id="preçoVenda" min="0" step="0.01" placeholder="Ex: 0,00"> <br>
+            <input type="number" name="preçoVenda" id="preçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
 
             <label for="estoque">Quantidade em Estoque</label>
-            <input type="number" name="estoque" id="estoque" min="0" placeholder="Ex: 0"> <br>
+            <input type="number" name="estoque" id="estoque" min="0" placeholder="Ex: 0" required> <br>
 
             <label for="seleçãoSetor">Setor</label>
             <select name="seleçãoSetor" id="seleçãoSetor">
@@ -165,7 +165,7 @@
             </select> <br>
 
             <label for="distribuidora">Distribuidora</label>
-            <input type="text" name="distribuidora" id="distribuidora" placeholder="Ex: Fazenda Feliz"> <br>
+            <input type="text" name="distribuidora" id="distribuidora" placeholder="Ex: Fazenda Feliz" required> <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -190,16 +190,16 @@
             <input type="hidden" name="idProduto" id="editIdProduto">
 
             <label for="nome">Nome</label>
-            <input type="text" name="nome" id="editNome" placeholder="Ex: Maçã"> <br>
+            <input type="text" name="nome" id="editNome" placeholder="Ex: Maçã" required> <br>
 
             <label for="precoCompra">Preço de Compra</label>
-            <input type="number" name="preçoCompra" id="editPreçoCompra" min="0" step="0.01" placeholder="Ex: 0,00"> <br>
+            <input type="number" name="preçoCompra" id="editPreçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
 
             <label for="precoVenda">Preço de Venda</label>
-            <input type="number" name="preçoVenda" id="editPreçoVenda" min="0" step="0.01" placeholder="Ex: 0,00"> <br>
+            <input type="number" name="preçoVenda" id="editPreçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
 
             <label for="estoque">Quantidade em Estoque</label>
-            <input type="number" name="estoque" id="editEstoque" min="0" placeholder="Ex: 0"> <br>
+            <input type="number" name="estoque" id="editEstoque" min="0" placeholder="Ex: 0" required> <br>
 
             <label for="seleçãoSetor">Setor</label>
             <select name="seleçãoSetor" id="seleçãoSetor">
@@ -214,7 +214,7 @@
             </select> <br>
 
             <label for="distribuidora">Distribuidora</label>
-            <input type="text" name="distribuidora" id="editDistribuidora" placeholder="Ex: Fazenda Feliz"> <br>
+            <input type="text" name="distribuidora" id="editDistribuidora" placeholder="Ex: Fazenda Feliz" required> <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

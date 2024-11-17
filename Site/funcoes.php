@@ -4,13 +4,13 @@ include_once('connection.php');
 
     if (isset($_POST['adcionarProduto'])){
         //Informações que serão inseridas no banco de dados.
-        $idProduto = $_POST['idProduto'];
-        $nome = $_POST['nome'];
-        $compra = $_POST['preçoCompra'];
-        $venda = $_POST['preçoVenda'];
-        $estoque = $_POST['estoque'];
-        $distribuidora = $_POST['distribuidora'];
-        $setor = $_POST['seleçãoSetor'];
+        $idProduto = $conn->real_escape_string($_POST['idProduto']);
+        $nome = $conn->real_escape_string($_POST['nome']);
+        $compra = $conn->real_escape_string($_POST['preçoCompra']);
+        $venda = $conn->real_escape_string($_POST['preçoVenda']);
+        $estoque = $conn->real_escape_string($_POST['estoque']);
+        $distribuidora = $conn->real_escape_string($_POST['distribuidora']);
+        $setor = $conn->real_escape_string($_POST['seleçãoSetor']);
 
         $result = "INSERT INTO produtos VALUES ($idProduto, '$nome', $compra, $venda, $estoque, '$distribuidora', $setor)";
 
@@ -23,13 +23,13 @@ include_once('connection.php');
 
     if (isset($_POST['editarProduto'])){
         //Informações que serão inseridas no banco de dados.
-        $idProduto = $_POST['idProduto'];
-        $nome = $_POST['nome'];
-        $compra = $_POST['preçoCompra'];
-        $venda = $_POST['preçoVenda'];
-        $estoque = $_POST['estoque'];
-        $distribuidora = $_POST['distribuidora'];
-        $setor = $_POST['seleçãoSetor'];
+        $idProduto = $conn->real_escape_string($_POST['idProduto']);
+        $nome = $conn->real_escape_string($_POST['nome']);
+        $compra = $conn->real_escape_string($_POST['preçoCompra']);
+        $venda = $conn->real_escape_string($_POST['preçoVenda']);
+        $estoque = $conn->real_escape_string($_POST['estoque']);
+        $distribuidora = $conn->real_escape_string($_POST['distribuidora']);
+        $setor = $conn->real_escape_string($_POST['seleçãoSetor']);
 
         $result = "UPDATE produtos SET nome = '$nome', preço_compra = $compra, preço_venda = $venda, estoque = $estoque, distribuidora = '$distribuidora', idSetor = $setor WHERE idProduto = $idProduto";
 
@@ -42,7 +42,7 @@ include_once('connection.php');
 
     if (isset($_POST['deletarProduto'])){
 
-        $idProduto = $_POST['idDeletar'];
+        $idProduto = $conn->real_escape_string($_POST['idDeletar']);
 
         $result = "DELETE from produtos where idProduto = $idProduto";
         mysqli_query($conn, $result);
@@ -52,12 +52,15 @@ include_once('connection.php');
 
     if (isset($_POST['adcionarUsuario'])){
         //Informações que serão inseridas no banco de dados.
-        $idUsuario = $_POST['idUsuario'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
+        $idUsuario = $conn->real_escape_string($_POST['idUsuario']);
+        $username = $conn->real_escape_string($_POST['username']);
+        $email = $conn->real_escape_string($_POST['email']);
+        $senha = $conn->real_escape_string($_POST['senha']);
+        $tipo = $conn->real_escape_string($_POST['seleçãoTipo']);
 
-        $result = "INSERT INTO usuarios VALUES ($idUsuario, '$email', '$senha', '$username', 0)";
+        $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
+
+        $result = "INSERT INTO usuarios VALUES ($idUsuario, '$email', '$senhaHash', '$username', $tipo)";
 
 
         mysqli_query($conn, $result);
@@ -67,12 +70,15 @@ include_once('connection.php');
 
     if (isset($_POST['editarUsuario'])){
         //Informações que serão inseridas no banco de dados.
-        $idUsuario = $_POST['idUsuario'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
+        $idUsuario = $conn->real_escape_string($_POST['idUsuario']);
+        $username = $conn->real_escape_string($_POST['username']);
+        $email = $conn->real_escape_string($_POST['email']);
+        $senha = $conn->real_escape_string($_POST['senha']);
+        $tipo = $conn->real_escape_string($_POST['seleçãoTipo']);
 
-        $result = "UPDATE usuarios SET email = '$email', senha = '$senha', username = '$username' WHERE idUsuario = $idUsuario";
+        $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
+
+        $result = "UPDATE usuarios SET email = '$email', senha = '$senhaHash', username = '$username', tipo_usuario = $tipo WHERE idUsuario = $idUsuario";
 
         var_dump($result);
 
@@ -83,7 +89,7 @@ include_once('connection.php');
 
     if (isset($_POST['deletarUsuario'])){
 
-        $idUsuario = $_POST['idDeletar'];
+        $idUsuario = $conn->real_escape_string($_POST['idDeletar']);
 
         $result = "DELETE from usuarios where idUsuario = $idUsuario";
         mysqli_query($conn, $result);

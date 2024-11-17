@@ -6,24 +6,29 @@
     <title>Login</title>
 </head>
 <?php 
+    session_start();
     include_once('connection.php');
+
+    if (isset($_SESSION['id'])) {
+        die(header("Location: listaProdutos.php" ));
+    }
+
     if (isset($_POST["email"]) || isset($_POST["senha"])){
 
         $email = $conn->real_escape_string($_POST["email"]);
-        $senha = $conn->real_escape_string($_POST["senha"]);
+        $senha = $conn->real_escape_string($_POST["senha"]); 
         
-        $sqlusuario = $conn->query("SELECT * FROM usuarios WHERE email = '$email' and senha = '$senha'");
+        $sqlusuario = $conn->query("SELECT * FROM usuarios WHERE email = '$email'");
+        $usuario = mysqli_fetch_array($sqlusuario, MYSQLI_ASSOC);
+        $senhaHash = $usuario['senha'];
+
+        var_dump(password_verify($senha, $senhaHash));
+
 
         $quantidade = $sqlusuario->num_rows;
 
         if($quantidade == 1) {
             
-            $usuario = $sqlusuario->fetch_assoc();
-
-            if(!isset($_SESSION)) {
-                session_start();
-            }
-
             $_SESSION['id'] = $usuario['idUsuario'];
             $_SESSION['username'] = $usuario['username'];
             $_SESSION['tipo'] = $usuario['tipo_usuario'];
@@ -33,6 +38,7 @@
         } else {
             echo "Falha ao logar! E-mail ou senha incorretos";
         }
+    
 
     };
 

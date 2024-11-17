@@ -18,7 +18,7 @@
     }
   
     //Tabelas
-    $usuario = $conn->query("SELECT * FROM usuarios WHERE tipo_usuario <> 1 ORDER BY idUsuario");
+    $usuario = $conn->query("SELECT * FROM usuarios ORDER BY idUsuario");
 ?>
 <body>
     <header>
@@ -70,6 +70,7 @@
                     <th>ID</th> 
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Tipo</th>
                     <th>Funções</th>
                 </tr>
             </thead>
@@ -83,7 +84,15 @@
                         <td><?php echo $rows['idUsuario']; ?></td>
                         <td><?php echo $rows['username']; ?></td>
                         <td><?php echo $rows['email']; ?></td>
-
+                        <?php 
+                        if ($rows['tipo_usuario'] == 0){
+                            echo "<td> Funcionário </td>";
+                        } else if ($rows['tipo_usuario'] == 1) {
+                            echo "<td> Admin </td>";
+                        } else {
+                            echo "<td> </td>";
+                        }
+                        ?>
                         <td> <button type="button" class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#editarModal">
   Editar </button> <button type="button" id="botãoDeletar" class="btn btn-danger btn-del" data-bs-toggle="modal" data-bs-target="#deletarModal">
   Deletar </button> </td>
@@ -111,13 +120,19 @@
             <input type="hidden" name="idUsuario" value="null">
 
             <label for="nome">Nome</label>
-            <input type="text" name="username" id="username"> <br>
+            <input type="text" name="username" id="username" required> <br>
 
             <label for="email">Email</label>
-            <input type="email" name="email" id="email"> <br>
+            <input type="email" name="email" id="email" required> <br>
 
-            <label for="email">Senha</label>
-            <input type="password" name="senha" id="senha">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" id="senha" required> <br>
+
+            <label for="seleçãoTipo">Setor</label>
+            <select name="seleçãoTipo" id="seleçãoTipo">
+                <option value="0">Funcionário</option>
+                <option value="1">Admin</option>
+            </select> 
 
       </div>
       <div class="modal-footer">
@@ -143,13 +158,20 @@
             <input type="hidden" name="idUsuario" id="editIdUsuario">
 
             <label for="nome">Nome</label>
-            <input type="text" name="username" id="editUsername"> <br>
+            <input type="text" name="username" id="editUsername" required> <br>
 
             <label for="email">Email</label>
-            <input type="email" name="email" id="editEmail"> <br>
+            <input type="email" name="email" id="editEmail" required> <br>
 
             <label for="email">Senha</label>
-            <input type="password" name="senha" id="editSenha">
+            <input type="password" name="senha" id="editSenha" required> <br>
+            
+            <label for="seleçãoTipo">Setor</label>
+            <select name="seleçãoTipo" id="seleçãoTipo">
+                <option value="0">Funcionário</option>
+                <option value="1">Admin</option>
+            </select> 
+            
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

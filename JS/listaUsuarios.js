@@ -1,6 +1,6 @@
 
 function pesquisa() {
-var input, filter, table, tr, td, i, txtValue;
+var input, filter, table, tr, i;
 input = document.getElementById("barraPesquisa");
 filter = input.value.toUpperCase();
 table = document.getElementById("myTable");
