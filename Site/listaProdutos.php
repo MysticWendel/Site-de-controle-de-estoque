@@ -8,11 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <?php
-    include_once('connection.php');
+  session_start();
+  include_once('connection.php');
+  include_once('funcoes.php');
 
-    if(!isset($_SESSION)) {
-      session_start();
-  }
 
   if (!isset($_SESSION['id'])) {
       die(header( "Location: index.php" ));
@@ -58,13 +57,15 @@
     </header>
 
     <main>
+      <h1 class="text-center">Lista de produtos</h1>
     <div class='containerTabela mx-5 mt-2 card'>
       <div class="mx-5">
+        <?php mensagemAlerta()?>
         <div class='ms-2 mt-2'>
             <input type="text" placeholder="Pesquisar..." onkeyup="pesquisa()" name="barraPesquisa" id="barraPesquisa"> 
             <select name="pesquisaSetor" id="pesquisaSetor">
                 <option value="0">---Todos---</option>
-                <option value="Frios e Laticínios">Frios e Laticínios</option>
+                <option value="Frios e laticínios">Frios e laticínios</option>
                 <option value="Higiene e limpeza">Higiene e limpeza</option>
                 <option value="Vegetais e frutas">Vegetais e frutas</option>
                 <option value="Açougue">Açougue</option>
@@ -131,42 +132,55 @@
   
 <!-- Modal Adcionar -->
 <div class="modal fade" id="adcionarModal" tabindex="-1" aria-labelledby="AdcionarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Adcionar Produto</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="funcoes.php" method="POST">
+      <form action="acoes.php" method="POST">
             <input type="hidden" name="idProduto" value="null">
 
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome" placeholder="Ex: Maçã" required> <br>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control"name="nome" id="nome" placeholder="Ex: Maçã" required>
+            </div>
 
-            <label for="precoCompra">Preço de Compra</label>
-            <input type="number" name="preçoCompra" id="preçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
+            <div class="row mb-3">
+              <div class="col">
+               <label for="precoCompra" class="form-label">Preço de Compra</label>
+               <input type="number" class="form-control" name="preçoCompra" id="preçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required>
+             </div>
+             <div class="col">
+              <label for="precoVenda" class="form-label">Preço de Venda</label>
+              <input type="number" class="form-control col" name="preçoVenda" id="preçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required>
+             </div> 
+            </div>
 
-            <label for="precoVenda">Preço de Venda</label>
-            <input type="number" name="preçoVenda" id="preçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
+            <div class="mb-3">
+              <label for="estoque" class="form-label">Quantidade em Estoque</label>
+              <input type="number" class="form-control" name="estoque" id="estoque" min="0" placeholder="Ex: 0" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="seleçãoSetor" class="form-label">Setor</label>
+              <select class="form-select" name="seleçãoSetor" id="seleçãoSetor">
+                  <option value="1">Frios e Laticínios</option>
+                  <option value="2">Higiene e limpeza</option>
+                  <option value="3">Vegetais e frutas</option>
+                  <option value="4">Açougue</option>
+                  <option value="5">Padaria</option>
+                  <option value="6">Cereais</option>
+                  <option value="7">Enlatados</option>
+                  <option value="8">Adega e Bebidas</option>
+              </select>
+            </div>
 
-            <label for="estoque">Quantidade em Estoque</label>
-            <input type="number" name="estoque" id="estoque" min="0" placeholder="Ex: 0" required> <br>
-
-            <label for="seleçãoSetor">Setor</label>
-            <select name="seleçãoSetor" id="seleçãoSetor">
-                <option value="1">Frios e Laticínios</option>
-                <option value="2">Higiene e limpeza</option>
-                <option value="3">Vegetais e frutas</option>
-                <option value="4">Açougue</option>
-                <option value="5">Padaria</option>
-                <option value="6">Cereais</option>
-                <option value="7">Enlatados</option>
-                <option value="8">Adega e Bebidas</option>
-            </select> <br>
-
-            <label for="distribuidora">Distribuidora</label>
-            <input type="text" name="distribuidora" id="distribuidora" placeholder="Ex: Fazenda Feliz" required> <br>
+            <div class="mb-3">
+              <label for="distribuidora" class="form-label">Distribuidora</label>
+              <input type="text" class="form-control" name="distribuidora" id="distribuidora" placeholder="Ex: Fazenda Feliz" required>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -180,42 +194,55 @@
 
 <!-- Modal Editar -->
 <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="EditarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Produto</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="funcoes.php" method="POST">
+      <form action="acoes.php" method="POST">
             <input type="hidden" name="idProduto" id="editIdProduto">
 
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" id="editNome" placeholder="Ex: Maçã" required> <br>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input type="text" class="form-control"name="nome" id="editNome" placeholder="Ex: Maçã" required>
+            </div>
 
-            <label for="precoCompra">Preço de Compra</label>
-            <input type="number" name="preçoCompra" id="editPreçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
+            <div class="row mb-3">
+              <div class="col">
+               <label for="precoCompra" class="form-label">Preço de Compra</label>
+               <input type="number" class="form-control" name="preçoCompra" id="editPreçoCompra" min="0" step="0.01" placeholder="Ex: 0,00" required>
+             </div>
+             <div class="col">
+              <label for="precoVenda" class="form-label">Preço de Venda</label>
+              <input type="number" class="form-control col" name="preçoVenda" id="editPreçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required>
+             </div> 
+            </div>
 
-            <label for="precoVenda">Preço de Venda</label>
-            <input type="number" name="preçoVenda" id="editPreçoVenda" min="0" step="0.01" placeholder="Ex: 0,00" required> <br>
+            <div class="mb-3">
+              <label for="estoque" class="form-label">Quantidade em Estoque</label>
+              <input type="number" class="form-control" name="estoque" id="editEstoque" min="0" placeholder="Ex: 0" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="seleçãoSetor" class="form-label">Setor</label>
+              <select class="form-select" name="seleçãoSetor" id="seleçãoSetor">
+                  <option value="1">Frios e Laticínios</option>
+                  <option value="2">Higiene e limpeza</option>
+                  <option value="3">Vegetais e frutas</option>
+                  <option value="4">Açougue</option>
+                  <option value="5">Padaria</option>
+                  <option value="6">Cereais</option>
+                  <option value="7">Enlatados</option>
+                  <option value="8">Adega e Bebidas</option>
+              </select>
+            </div>
 
-            <label for="estoque">Quantidade em Estoque</label>
-            <input type="number" name="estoque" id="editEstoque" min="0" placeholder="Ex: 0" required> <br>
-
-            <label for="seleçãoSetor">Setor</label>
-            <select name="seleçãoSetor" id="seleçãoSetor">
-                <option value="1">Frios e Laticínios</option>
-                <option value="2">Higiene e limpeza</option>
-                <option value="3">Vegetais e frutas</option>
-                <option value="4">Açougue</option>
-                <option value="5">Padaria</option>
-                <option value="6">Cereais</option>
-                <option value="7">Enlatados</option>
-                <option value="8">Adega e Bebidas</option>
-            </select> <br>
-
-            <label for="distribuidora">Distribuidora</label>
-            <input type="text" name="distribuidora" id="editDistribuidora" placeholder="Ex: Fazenda Feliz" required> <br>
+            <div class="mb-3">
+              <label for="distribuidora" class="form-label">Distribuidora</label>
+              <input type="text" class="form-control" name="distribuidora" id="editDistribuidora" placeholder="Ex: Fazenda Feliz" required>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -236,7 +263,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Produto</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="funcoes.php" method="post">
+      <form action="acoes.php" method="post">
       <input type="hidden" name="idDeletar" id="idDeletar">
       <div class="modal-body">
         <h4>Realmente deseja deleta este item?</h4>

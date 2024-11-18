@@ -8,11 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <?php
+    session_start();
     include_once('connection.php');
-    if(!isset($_SESSION)) {
-        session_start();
-    }
-  
+    include_once('funcoes.php');
+      
     if (!isset($_SESSION['id']) || $_SESSION['tipo'] <> 1) {
         die(header( "Location: listaProdutos.php" ));
     }
@@ -54,8 +53,10 @@
 </nav>
     </header>
     <main>
-        <div class='containerTabela mx-5 mt-2 card'>
+      <h1 class="text-center">Lista de Usuários</h1>
+      <div class='containerTabela mx-5 mt-2 card'>
       <div class="mx-5">
+      <?php mensagemAlerta()?>
         <div class='ms-2 mt-2'>
             <input type="text" placeholder="Pesquisar..." onkeyup="pesquisa()" name="barraPesquisa" id="barraPesquisa"> 
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adcionarModal">
@@ -106,7 +107,6 @@
         </div>
         </div>
 
-  
 <!-- Modal Adcionar -->
 <div class="modal fade" id="adcionarModal" tabindex="-1" aria-labelledby="AdcionarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -116,20 +116,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="funcoes.php" method="POST">
+      <form action="acoes.php" method="POST">
             <input type="hidden" name="idUsuario" value="null">
 
-            <label for="nome">Nome</label>
-            <input type="text" name="username" id="username" required> <br>
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" name="username" id="username" required> <br>
 
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required> <br>
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required> <br>
 
-            <label for="senha">Senha</label>
-            <input type="password" name="senha" id="senha" required> <br>
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" name="senha" id="senha" required> <br>
 
             <label for="seleçãoTipo">Setor</label>
-            <select name="seleçãoTipo" id="seleçãoTipo">
+            <select name="seleçãoTipo" id="seleçãoTipo" class="form-select">
                 <option value="0">Funcionário</option>
                 <option value="1">Admin</option>
             </select> 
@@ -154,24 +154,25 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="funcoes.php" method="POST">
+      <form action="acoes.php" method="POST">
             <input type="hidden" name="idUsuario" id="editIdUsuario">
 
-            <label for="nome">Nome</label>
-            <input type="text" name="username" id="editUsername" required> <br>
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" name="username" id="editUsername" required> <br>
 
-            <label for="email">Email</label>
-            <input type="email" name="email" id="editEmail" required> <br>
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="editEmail"  required> <br>
 
-            <label for="email">Senha</label>
-            <input type="password" name="senha" id="editSenha" required> <br>
-            
+            <label for="senha" class="form-label">Senha*</label>
+            <input type="password" class="form-control" name="senha" id="editSenha"> <br>
+
             <label for="seleçãoTipo">Setor</label>
-            <select name="seleçãoTipo" id="seleçãoTipo">
+            <select name="seleçãoTipo" id="seleçãoTipo" class="form-select">
                 <option value="0">Funcionário</option>
                 <option value="1">Admin</option>
             </select> 
-            
+          
+            <p style="color: gray;">* = caso não queira editar a senha, deixe o campo em branco.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -192,7 +193,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Produto</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="funcoes.php" method="post">
+      <form action="acoes.php" method="post">
       <input type="hidden" name="idDeletar" id="idDeletar">
       <div class="modal-body">
         <h4>Realmente deseja deleta este usuario?</h4>

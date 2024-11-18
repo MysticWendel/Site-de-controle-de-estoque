@@ -9,9 +9,10 @@
 <?php 
     session_start();
     include_once('connection.php');
+    include_once('funcoes.php');
 
     if (isset($_SESSION['id'])) {
-        die(header("Location: listaProdutos.php" ));
+        die(header("Location: listaProdutos.php"));
     }
 
     if (isset($_POST["email"]) || isset($_POST["senha"])){
@@ -20,28 +21,30 @@
         $senha = $conn->real_escape_string($_POST["senha"]); 
         
         $sqlusuario = $conn->query("SELECT * FROM usuarios WHERE email = '$email'");
+        if(mysqli_num_rows($sqlusuario) == 1){
+        
         $usuario = mysqli_fetch_array($sqlusuario, MYSQLI_ASSOC);
         $senhaHash = $usuario['senha'];
 
-        var_dump(password_verify($senha, $senhaHash));
-
-
-        $quantidade = $sqlusuario->num_rows;
-
-        if($quantidade == 1) {
+        if (!password_verify($senha, $senhaHash)){
+            $_SESSION['erro'] = "Falha ao logar! E-mail ou senha incorretos.";
+            header( "Location: index.php");
+            die();
+        } else {
             
             $_SESSION['id'] = $usuario['idUsuario'];
             $_SESSION['username'] = $usuario['username'];
             $_SESSION['tipo'] = $usuario['tipo_usuario'];
             
-            header( "Location: listaProdutos.php" );   
-
-        } else {
-            echo "Falha ao logar! E-mail ou senha incorretos";
-        }
-    
-
-    };
+            header( "Location: listaProdutos.php" ); 
+            die();
+        } 
+    } else {
+        $_SESSION['erro'] = "Falha ao logar! E-mail ou senha incorretos.";
+        header( "Location: index.php");
+        die();
+    }
+}
 
 ?>
 <body>
@@ -57,8 +60,9 @@
             <div class="card border-2">
               <div class="card-body">
                 <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Login</h1>
+                <?php mensagemAlerta()?>
                 <form method="post">
-                  <input type="text" name="email" id="email" class="form-control my-4 py-2" placeholder="Email" />
+                  <input type="email" name="email" id="email" class="form-control my-4 py-2" placeholder="Email" />
                   <input type="password" name="senha" id="senha" class="form-control my-4 py-2" placeholder="Senha" />
                   <div class="text-center mt-3">
                     <button type="submit" class="btn btn-primary">Entrar</button>
