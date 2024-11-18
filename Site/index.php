@@ -24,28 +24,45 @@
         if(mysqli_num_rows($sqlusuario) == 1){
         
         $usuario = mysqli_fetch_array($sqlusuario, MYSQLI_ASSOC);
-        $senhaHash = $usuario['senha'];
+        $senhaBanco = $usuario['senha'];
 
-        if (!password_verify($senha, $senhaHash)){
-            $_SESSION['erro'] = "Falha ao logar! E-mail ou senha incorretos.";
-            header( "Location: index.php");
-            die();
-        } else {
+        //Verificar se a senha está com HASH
+        if ($senha <> $senhaBanco){
+
+          //Verificar se a senha digitada corresponde ao HASH
+          if (!password_verify($senha, $senhaBanco)){
+              $_SESSION['erro'] = "Falha ao logar! E-mail ou senha incorretos.";
+              header( "Location: index.php");
+              die();
+          } else {
             
+            //Dados da sessão
             $_SESSION['id'] = $usuario['idUsuario'];
             $_SESSION['username'] = $usuario['username'];
             $_SESSION['tipo'] = $usuario['tipo_usuario'];
             
+            //Redirecionamento
             header( "Location: listaProdutos.php" ); 
             die();
         } 
     } else {
-        $_SESSION['erro'] = "Falha ao logar! E-mail ou senha incorretos.";
-        header( "Location: index.php");
-        die();
-    }
-}
 
+      //Converter a senha colocada caso ela não esteja hashada
+      $senhaConvertida = password_hash($senha, PASSWORD_BCRYPT);
+      $result = "UPDATE usuarios SET senha = '$senhaConvertida' WHERE email = '$email'";
+      $query = mysqli_query($conn, $result);
+
+      //Dados da sessão
+      $_SESSION['id'] = $usuario['idUsuario'];
+      $_SESSION['username'] = $usuario['username'];
+      $_SESSION['tipo'] = $usuario['tipo_usuario'];
+
+      //Redirecionamento
+      header( "Location: listaProdutos.php" ); 
+      die();
+    }
+  }
+}
 ?>
 <body>
 <header>

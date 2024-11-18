@@ -67,5 +67,6 @@ $(document).ready(function(){
     $('#editPreçoVenda').val(data[3]);
     $('#editEstoque').val(data[4]);
     $('#editDistribuidora').val(data[5]);
+    $('#editarSetor').val(data[7]);
   });
   });

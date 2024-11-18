@@ -72,7 +72,7 @@
                 <option value="Padaria">Padaria</option>
                 <option value="Cereais">Cereais</option>
                 <option value="Enlatados">Enlatados</option>
-                <option value="Adega e Bebidas">Adega e Bebidas</option>
+                <option value="Adega e bebidas">Adega e bebidas</option>
             </select>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adcionarModal">
   Adcionar Produto
@@ -226,16 +226,16 @@
             </div>
             
             <div class="mb-3">
-              <label for="seleçãoSetor" class="form-label">Setor</label>
-              <select class="form-select" name="seleçãoSetor" id="seleçãoSetor">
-                  <option value="1">Frios e Laticínios</option>
-                  <option value="2">Higiene e limpeza</option>
-                  <option value="3">Vegetais e frutas</option>
-                  <option value="4">Açougue</option>
-                  <option value="5">Padaria</option>
-                  <option value="6">Cereais</option>
-                  <option value="7">Enlatados</option>
-                  <option value="8">Adega e Bebidas</option>
+              <label for="editarSetor" class="form-label">Setor</label>
+              <select class="form-select" name="editarSetor" id="editarSetor">
+                <option value="Frios e laticínios">Frios e laticínios</option>
+                <option value="Higiene e limpeza">Higiene e limpeza</option>
+                <option value="Vegetais e frutas">Vegetais e frutas</option>
+                <option value="Açougue">Açougue</option>
+                <option value="Padaria">Padaria</option>
+                <option value="Cereais">Cereais</option>
+                <option value="Enlatados">Enlatados</option>
+                <option value="Adega e bebidas">Adega e bebidas</option>
               </select>
             </div>
 

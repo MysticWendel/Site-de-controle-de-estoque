@@ -45,5 +45,6 @@ $(document).ready(function(){
     $('#editIdUsuario').val(data[0]);
     $('#editUsername').val(data[1]);
     $('#editEmail').val(data[2]);
+    $('#editarTipo').val(data[3]);
   });
   });

@@ -166,11 +166,11 @@
             <label for="senha" class="form-label">Senha*</label>
             <input type="password" class="form-control" name="senha" id="editSenha"> <br>
 
-            <label for="seleçãoTipo">Setor</label>
-            <select name="seleçãoTipo" id="seleçãoTipo" class="form-select">
-                <option value="0">Funcionário</option>
-                <option value="1">Admin</option>
-            </select> 
+            <label for="editarTipo">Setor</label>
+            <select class="form-select" name="editarTipo" id="editarTipo">
+                <option value="Funcionário">Funcionário</option>
+                <option value="Admin">Admin</option>
+            </select> <br>
           
             <p style="color: gray;">* = caso não queira editar a senha, deixe o campo em branco.</p>
       </div>
